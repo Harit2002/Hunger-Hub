@@ -14,52 +14,47 @@ import com.masai.Repository.UserRepo;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepo userRepo;
-	
+
 	@Autowired
 	RoleRepo roleRepo;
-	
 
 	@Override
-	public User regiserUser(User user) {
+	public User regiserUser(User user) throws UserException {
+		if (user == null)
+			throw new UserException("Please enter valid user object");
 		return userRepo.save(user);
-		
-	}
 
+	}
 
 	@Override
 	public User viewById(Integer id) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+		User user = userRepo.findById(id).orElseThrow(() -> new UserException("Please enter valid user id"));
+		return user;
 	}
-
 
 	@Override
-	public User viewByEmail(String email) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+	public User updateDetails(User user, Integer id) throws UserException {
+		userRepo.findById(id).orElseThrow(() -> new UserException("Please enter valid user id"));
+		return userRepo.save(user);
 	}
-
-
-	@Override
-	public User updateDetails(User user) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public String deleteUser(Integer id) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		User user = userRepo.findById(id).orElseThrow(() -> new UserException("Please enter valid user id"));
+		userRepo.delete(user);
 
+		return "User deleted successfully";
+	}
 
 	@Override
-	public List<User> viewAllUser(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+	public List<User> viewAllUser() throws UserException {
+		List<User> list = userRepo.findAll();
 
+		if (list.isEmpty())
+			throw new UserException("No user exist in database");
+
+		return list;
+
+	}
 
 }

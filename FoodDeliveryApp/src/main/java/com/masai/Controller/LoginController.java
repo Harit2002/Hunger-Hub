@@ -17,7 +17,7 @@ public class LoginController {
 	@Autowired
 	UserRepo repo;
 	 
-    @GetMapping("/login")
+    @GetMapping("users/login")
     public ResponseEntity<User> loginCustomer(Authentication auth) {
     	
     	User user = repo.findByEmail(auth.getName()).orElseThrow(() -> new UsernameNotFoundException("User not found"));

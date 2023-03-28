@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -19,6 +21,7 @@ public class Role {
     private Integer id;
     private String roleName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "role")
     private List<User> userList = new ArrayList<>();
 }
