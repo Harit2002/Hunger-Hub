@@ -18,6 +18,7 @@ import com.masai.Model.User;
 import com.masai.Service.UserService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -51,7 +52,7 @@ public class UserController {
 	}
 	
 	@PutMapping("{id}")
-	public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) throws UserException {
+	public ResponseEntity<User> updateUser(@PathVariable Integer id,@Valid @RequestBody User user) throws UserException {
 
 		return new ResponseEntity<>(userSer.updateDetails(user, id), HttpStatus.ACCEPTED);
 

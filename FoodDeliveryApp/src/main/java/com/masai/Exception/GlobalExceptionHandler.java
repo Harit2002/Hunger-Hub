@@ -35,6 +35,17 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(CategoryException.class)
+	public ResponseEntity<MyErrorDetails> categoryExceptionHandler(CategoryException category, WebRequest req) {
+
+		MyErrorDetails details = new MyErrorDetails();
+		details.setTimeStamp(LocalDateTime.now());
+		details.setMessage(category.getMessage());
+		details.setErrorDetails(req.getDescription(false));
+
+		return new ResponseEntity<>(details, HttpStatus.BAD_REQUEST);
+	}
 
 	@ExceptionHandler(FoodCartException.class)
 	public ResponseEntity<MyErrorDetails> foodCartExceptionHandler(FoodCartException food, WebRequest req) {

@@ -11,6 +11,5 @@ public interface UserService {
 	public User viewByEmail(String email) throws UserException;
 	public User updateDetails(User user, Integer id) throws UserException;;
 	public String deleteUser(Integer id) throws UserException;
-	public List<User> viewAllUser() throws UserException;
-	
+	public List<User> viewAllUser() throws UserException;	
 }

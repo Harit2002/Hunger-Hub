@@ -15,6 +15,8 @@ import com.masai.Model.User;
 import com.masai.Repository.RoleRepo;
 import com.masai.Service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 public class LoginController {
 	
@@ -35,12 +37,12 @@ public class LoginController {
     	return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
     }
 	@PostMapping("/signIn")
-	public ResponseEntity<User> registerUser(@RequestBody User user) throws UserException {
+	public ResponseEntity<User> registerUser(@Valid @RequestBody User user) throws UserException {
 
 		user.setPassword(penc.encode(user.getPassword()));
 		user.setRole(roleRepo.findById(2).get());
 
-		return new ResponseEntity<>(userSer.regiserUser(user), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(userSer.regiserUser(user), HttpStatus.CREATED);
 
 	}
 }
