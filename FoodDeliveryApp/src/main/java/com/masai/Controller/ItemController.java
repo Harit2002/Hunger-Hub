@@ -38,31 +38,31 @@ public class ItemController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Item> updateItem(@Valid @RequestBody Item item, @PathVariable Integer id) throws ItemException {
 
-		return new ResponseEntity<>(itemService.updateItem(item, id), HttpStatus.CREATED);
+		return new ResponseEntity<>(itemService.updateItem(item, id), HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("name/{name}")
 	public ResponseEntity<List<Item>> viewItem(@PathVariable String name) throws ItemException {
 		
-		return new ResponseEntity<>(itemService.viewItemByName(name), HttpStatus.CREATED);
+		return new ResponseEntity<>(itemService.viewItemByName(name), HttpStatus.OK);
 	}
 	
 	@GetMapping("restaurant/{id}")
 	public ResponseEntity<List<Item>> viewItemByRestaurant(@PathVariable Integer restaurantID) throws ItemException, RestaurantException {
 		
-		return new ResponseEntity<>(itemService.viewItemByRestaurant(restaurantID), HttpStatus.CREATED);
+		return new ResponseEntity<>(itemService.viewItemByRestaurant(restaurantID), HttpStatus.OK);
 	}
 	
 	@GetMapping("category/{id}")
 	public ResponseEntity<List<Item>> viewItemByCategory(@PathVariable Integer categoryId) throws ItemException, CategoryException {
 		
-		return new ResponseEntity<>(itemService.viewItemByCategory(categoryId), HttpStatus.CREATED);
+		return new ResponseEntity<>(itemService.viewItemByCategory(categoryId), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Item> deleteItem(@PathVariable Integer id) throws ItemException {
 		
-		return new ResponseEntity<>(itemService.removeItem(id), HttpStatus.CREATED);
+		return new ResponseEntity<>(itemService.removeItem(id), HttpStatus.OK);
 	}
 	
 	
