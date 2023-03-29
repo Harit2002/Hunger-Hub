@@ -57,4 +57,9 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+	@Override
+	public User viewByEmail(String email) throws UserException {
+		return userRepo.findByEmail(email).orElseThrow(() -> new UserException("Please enter valid user id"));
+	}
+
 }
