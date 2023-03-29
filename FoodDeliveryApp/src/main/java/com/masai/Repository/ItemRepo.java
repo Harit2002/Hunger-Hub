@@ -19,7 +19,7 @@ import com.masai.Model.Restaurant;
 public interface ItemRepo extends JpaRepository<Item, Integer> {
 
 
-	Optional<Item> findByItemName(String name);
+//	Optional<Item> findByItemName(String name);
 
 	public List<Item> findByCategory(Category category);
 
