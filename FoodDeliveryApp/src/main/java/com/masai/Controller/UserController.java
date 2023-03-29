@@ -28,6 +28,7 @@ public class UserController {
 	@Autowired
 	UserService userSer;
 
+
 	@GetMapping("/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable Integer id) throws UserException {
 
