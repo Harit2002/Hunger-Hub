@@ -67,9 +67,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
-	public List<Restaurant> viewRestaurantByItem(String name) throws ItemException {
+	public List<Restaurant> viewRestaurantByItem(Integer id) throws ItemException {
 		
-		Item item = itemRepo.findByItemName(name).orElseThrow(() -> new ItemException("Item with name "+ name +" does not exist."));
+		Item item = itemRepo.findById(id).orElseThrow(() -> new ItemException("Item with id " + id + " does not exist."));
 		
 		List<Restaurant> list = respo.findByItemList(item);
 		
