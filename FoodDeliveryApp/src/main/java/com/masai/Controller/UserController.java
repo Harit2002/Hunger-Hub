@@ -30,21 +30,6 @@ public class UserController {
 	@Autowired
 	UserService userSer;
 
-	@Autowired
-	RoleRepo roleRepo;
-
-	@Autowired
-	PasswordEncoder penc;
-
-	@PostMapping("/signIn")
-	public ResponseEntity<User> registerUser(@RequestBody User user) throws UserException {
-
-		user.setPassword(penc.encode(user.getPassword()));
-		user.setRole(roleRepo.findById(2).get());
-
-		return new ResponseEntity<>(userSer.regiserUser(user), HttpStatus.ACCEPTED);
-
-	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable Integer id) throws UserException {
