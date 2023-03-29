@@ -15,12 +15,11 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "foodCart")
 @AllArgsConstructor
 @NoArgsConstructor
 public class FoodCart {
     @Id
-    private String cartId;
+    private Integer cartId;
     @OneToOne
     private User user;
     
