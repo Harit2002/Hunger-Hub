@@ -12,6 +12,7 @@ import com.masai.Model.Restaurant;
 @Repository
 public interface ItemRepo extends JpaRepository<Item, Integer> {
 
+
 	public List<Item> findByCategory(Category category);
 
 	public List<Item> findByItemName(String name);
