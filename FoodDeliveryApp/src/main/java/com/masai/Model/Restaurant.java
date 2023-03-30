@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,12 +29,12 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer restaurantId;
     
-    @NotNull(message = "Name of restaurent should not be null")
-    @NotEmpty(message = "Name of restaurent should not be empty")
-    @NotBlank(message = "Name of restaurent should not be blank")
+    @NotNull(message = "Name of restaurent should not be null.")
+    @NotEmpty(message = "Name of restaurent should not be empty.")
+    @NotBlank(message = "Name of restaurent should not be blank.")
     private String restaurantName;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     
     @JsonIgnore
@@ -42,7 +43,7 @@ public class Restaurant {
     
     private String managerName;
     
-    @NotNull(message = "Contact number is mandatory")
-	@Pattern(regexp = "^[6-9][0-9]{9}", message = "Mobile number must have 10 digits")
+    @NotNull(message = "Contact number is mandatory.")
+	@Pattern(regexp = "^[6-9][0-9]{9}", message = "Mobile number must have 10 digits.")
     private String contactNumber;
 }

@@ -64,11 +64,11 @@ public class JwtTokenGenratorFilter extends OncePerRequestFilter {
     
     }
 	
-//
-//	@Override
-//	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException{
-//		return !request.getServletPath().equals("users/login" );
-//	}
+
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException{
+		return !request.getServletPath().equals("/users/login" );
+	}
 	
 
 }

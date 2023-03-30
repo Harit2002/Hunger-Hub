@@ -22,7 +22,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
-@SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "bearer-key")
 public class UserController {
 
 	@Autowired
@@ -44,6 +44,7 @@ public class UserController {
 		return new ResponseEntity<>(user, HttpStatus.OK);
 
 	}
+	
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity<String> deleteUser(@PathVariable Integer id) throws UserException {

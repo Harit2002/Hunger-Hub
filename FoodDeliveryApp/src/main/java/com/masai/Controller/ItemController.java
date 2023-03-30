@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.masai.Exception.RestaurantException;
 import com.masai.Model.Item;
 import com.masai.Service.ItemService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
@@ -29,12 +31,16 @@ public class ItemController {
 	@Autowired
 	ItemService itemService;
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("")
+	@SecurityRequirement(name = "bearer-key")
 	public ResponseEntity<Item> addItem(@Valid @RequestBody Item item) throws ItemException {
 
 		return new ResponseEntity<>(itemService.addItem(item), HttpStatus.CREATED);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@SecurityRequirement(name = "bearer-key")
 	@PutMapping("/{id}")
 	public ResponseEntity<Item> updateItem(@Valid @RequestBody Item item, @PathVariable Integer id) throws ItemException {
 
@@ -59,6 +65,8 @@ public class ItemController {
 		return new ResponseEntity<>(itemService.viewItemByCategory(categoryId), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@SecurityRequirement(name = "bearer-key")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Item> deleteItem(@PathVariable Integer id) throws ItemException {
 		
