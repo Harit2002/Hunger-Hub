@@ -46,7 +46,6 @@ public class LoginController {
 		user.setPassword(penc.encode(user.getPassword()));
 		user.setRole(roleRepo.findById(1).get());
 
-
 		return new ResponseEntity<>(userSer.regiserUser(user), HttpStatus.CREATED);
 
 	}
