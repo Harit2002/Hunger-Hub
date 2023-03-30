@@ -59,10 +59,10 @@ public class RestaurantController {
 	
 	}
 	
-	@GetMapping("item/{itemName}")
-	public ResponseEntity<List<Restaurant>> viewRestaurantByItem(@PathVariable String itemName) throws RestaurantException, ItemException{
+	@GetMapping("item/{itemID}")
+	public ResponseEntity<List<Restaurant>> viewRestaurantByItem(@PathVariable Integer itemID) throws RestaurantException, ItemException{
 		
-		return new ResponseEntity<>(repo.viewRestaurantByItem(itemName), HttpStatus.OK);
+		return new ResponseEntity<>(repo.viewRestaurantByItem(itemID), HttpStatus.OK);
 	
 	}
 	

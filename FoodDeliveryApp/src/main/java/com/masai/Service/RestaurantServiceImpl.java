@@ -42,7 +42,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public String removeRestaurant(Integer resId) throws RestaurantException {
 		
 		Restaurant res = respo.findById(resId).orElseThrow(()->  new RestaurantException("Restaurent is not registered"));
-		
 		respo.delete(res);
 		
 		return "Restaurant "+res.getRestaurantName()+" has been deleted successfully";
@@ -67,9 +66,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
-	public List<Restaurant> viewRestaurantByItem(String name) throws ItemException {
+	public List<Restaurant> viewRestaurantByItem(Integer id) throws ItemException {
 		
-		Item item = itemRepo.findByItemName(name).orElseThrow(() -> new ItemException("Item with name "+ name +" does not exist."));
+		Item item = itemRepo.findById(id).orElseThrow(() -> new ItemException("Item with id " + id + " does not exist."));
 		
 		List<Restaurant> list = respo.findByItemList(item);
 		
