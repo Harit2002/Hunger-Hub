@@ -42,7 +42,6 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public String removeRestaurant(Integer resId) throws RestaurantException {
 		
 		Restaurant res = respo.findById(resId).orElseThrow(()->  new RestaurantException("Restaurent is not registered"));
-		
 		respo.delete(res);
 		
 		return "Restaurant "+res.getRestaurantName()+" has been deleted successfully";

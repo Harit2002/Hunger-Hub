@@ -60,6 +60,7 @@ public class RestaurantController {
 	public ResponseEntity<List<Restaurant>> viewRestaurantByItem(@PathVariable Integer id) throws RestaurantException, ItemException{
 		
 		return new ResponseEntity<>(repo.viewRestaurantByItem(id), HttpStatus.OK);
+
 	
 	}
 	
