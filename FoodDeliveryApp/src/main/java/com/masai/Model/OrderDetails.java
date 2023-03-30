@@ -17,6 +17,7 @@ public class OrderDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
     private LocalDate date;
+    
     @OneToOne
     private FoodCart foodCart;
     private String orderStatus;

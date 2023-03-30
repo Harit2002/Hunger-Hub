@@ -1,5 +1,6 @@
 package com.masai.Model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,10 +28,11 @@ public class User {
     private String firstName;
     private String lastName;
     private Integer age;
+    
     @Size(min = 10, max = 10, message = "mobile number should be of 10 digits")
     private String mobNumb;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     
     @NotNull(message = "email can't be null")

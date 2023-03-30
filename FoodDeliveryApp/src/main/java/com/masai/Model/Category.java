@@ -12,11 +12,14 @@ import lombok.Data;
 @Entity
 @Data
 public class Category {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer catid;
+  
 	@NotNull(message = "Category name cannot be null")
 	@NotBlank(message = "Category name cannot be blank")
 	@NotEmpty(message = "Category name cannot be empty")
 	private String categoryName;
+
 }

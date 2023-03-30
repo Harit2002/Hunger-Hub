@@ -24,8 +24,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Override
 	public Restaurant addRestaurant(Restaurant res) throws RestaurantException {
 		
-		if(res==null) throw new RestaurantException("Restaurent is already registered");
-		
+		if(res == null) throw new RestaurantException("Restaurent is already registered");
 		
 		return respo.save(res);
 	}

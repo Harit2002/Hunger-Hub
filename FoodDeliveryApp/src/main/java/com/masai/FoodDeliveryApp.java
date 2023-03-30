@@ -2,18 +2,16 @@ package com.masai;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
-@OpenAPIDefinition(info = @Info(title = "HungerHub Food Delivery app API", version = "$1.0", description = "${api.description}"), servers = @Server(url = "${api.server.url}", description = "It inbuilt use tomcat server at port 8888"))
+@OpenAPIDefinition
 @SpringBootApplication
 public class FoodDeliveryApp {
 
@@ -21,22 +19,14 @@ public class FoodDeliveryApp {
 		SpringApplication.run(FoodDeliveryApp.class, args);
 	}
 
-//	@Bean
-//	public OpenAPI customizeOpenAPI() {
-//		final String securitySchemeName = "bearerAuth";
-//		return new OpenAPI().addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
-//				.components(new Components().addSecuritySchemes(securitySchemeName, new SecurityScheme()
-//						.name(securitySchemeName).type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
-//	}
-
 	@Bean
-	public LocalValidatorFactoryBean validator(MessageSource ms) {
-
-		LocalValidatorFactoryBean lvfb = new LocalValidatorFactoryBean();
-		lvfb.setValidationMessageSource(ms);
-
-		return lvfb;
-
+	public OpenAPI customOpenAPI() {
+		return new OpenAPI()
+				.components(new Components().addSecuritySchemes("bearer-key",
+						new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")))
+				.info(new Info().title("HungerHub API").version("1.0").description(
+						"This is food delivery app REST API using spring boot. We have used sping data jpa i.e ORM for data operations and spring-security using JWT for user validation / authentication.")
+						.termsOfService("8888/swagger-ui/index.html").license(new License().name("Apache 2.0")));
 	}
 
 }

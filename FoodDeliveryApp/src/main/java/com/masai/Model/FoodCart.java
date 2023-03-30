@@ -1,17 +1,19 @@
 package com.masai.Model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -19,11 +21,12 @@ import java.util.List;
 @NoArgsConstructor
 public class FoodCart {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cartId;
     @OneToOne
     private User user;
     
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "itemId")
-    private List<Item> itemList = new ArrayList<>();
+    private Set<Item> itemList = new HashSet<>();
 }
