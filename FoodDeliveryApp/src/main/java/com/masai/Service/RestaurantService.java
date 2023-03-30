@@ -13,5 +13,7 @@ public interface RestaurantService {
 	public String removeRestaurant(Integer resId) throws RestaurantException;
 	public Restaurant viewRestaurant(Integer id) throws RestaurantException;;
 	public List<Restaurant> viewRestaurantByLocation(String location) throws RestaurantException;
+
 	public List<Restaurant> viewRestaurantByItem(Integer itemId) throws ItemException;
+
 }

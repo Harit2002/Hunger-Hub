@@ -39,13 +39,14 @@ public class LoginController {
     	User user = userSer.viewByEmail(auth.getName());
     	return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
     }
-    
-    
+
 	@PostMapping("users/signIn")
 	public ResponseEntity<User> registerUser(@Valid @RequestBody User user) throws UserException {
 
 		user.setPassword(penc.encode(user.getPassword()));
+
 		user.setRole(roleRepo.findById(1).get());
+
 
 		return new ResponseEntity<>(userSer.regiserUser(user), HttpStatus.CREATED);
 
