@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masai.Exception.UserException;
+import com.masai.Model.FoodCart;
 import com.masai.Model.User;
+import com.masai.Repository.FoodCartRepo;
 import com.masai.Repository.RoleRepo;
 import com.masai.Repository.UserRepo;
 
@@ -17,12 +19,24 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	RoleRepo roleRepo;
+	
+	@Autowired
+	FoodCartRepo cartRepo;
 
 	@Override
 	public User regiserUser(User user) throws UserException {
 		if (user == null)
 			throw new UserException("Please enter valid user object");
-		return userRepo.save(user);
+		
+		FoodCart cart = new FoodCart();
+		
+		User us = userRepo.save(user);
+		
+		cart.setUser(us);
+		
+		cartRepo.save(cart);
+		
+		return us;
 
 	}
 

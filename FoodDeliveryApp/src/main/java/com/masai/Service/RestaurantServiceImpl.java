@@ -24,8 +24,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Override
 	public Restaurant addRestaurant(Restaurant res) throws RestaurantException {
 		
+
 		if(res==null) throw new RestaurantException("Please enter valid details");
 		
+
 		
 		return respo.save(res);
 	}

@@ -22,7 +22,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
-@SecurityRequirement(name = "bearerAuth")
+@SecurityRequirement(name = "bearer-key")
 public class UserController {
 
 	@Autowired
@@ -33,7 +33,7 @@ public class UserController {
 	public ResponseEntity<User> getUserById(@PathVariable Integer id) throws UserException {
 
 		User user = userSer.viewById(id);
-		return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 
 	}
 	
@@ -41,14 +41,15 @@ public class UserController {
 	public ResponseEntity<List<User>> getAllUser() throws UserException {
 
 		List<User> user = userSer.viewAllUser();
-		return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 
 	}
+	
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity<String> deleteUser(@PathVariable Integer id) throws UserException {
 
-		return new ResponseEntity<>(userSer.deleteUser(id), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(userSer.deleteUser(id), HttpStatus.OK);
 
 	}
 	

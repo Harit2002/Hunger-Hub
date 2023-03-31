@@ -2,18 +2,21 @@ package com.masai.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,6 +42,7 @@ public class Item {
 	@Min(value = 50, message = "Minimum value can't be less then 50 rupee.")
 	private double cost;
 
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "Item_restaurant", 
 	joinColumns = { @JoinColumn(name = "itemID") },
@@ -46,7 +50,7 @@ public class Item {
 	})
 	private List<Restaurant> resList = new ArrayList<>();
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "catid")
 	private Category category;
 }
