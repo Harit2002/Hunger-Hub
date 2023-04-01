@@ -48,6 +48,7 @@ public class User {
     @NotNull(message = "password can't be null")
     @NotBlank(message = "password can't be blank")
     @NotEmpty(message = "password can't be empty")
+    //@Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", message = "Please ensure that password is at least 8 characters long and contains at least one digit, one lowercase letter, one uppercase letter.")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     
