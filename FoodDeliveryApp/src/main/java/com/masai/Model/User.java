@@ -1,5 +1,8 @@
 package com.masai.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,9 +48,11 @@ public class User {
     @NotNull(message = "password can't be null")
     @NotBlank(message = "password can't be blank")
     @NotEmpty(message = "password can't be empty")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     
     @ManyToOne
+    @JsonIgnore
     private Role role;
     
 }

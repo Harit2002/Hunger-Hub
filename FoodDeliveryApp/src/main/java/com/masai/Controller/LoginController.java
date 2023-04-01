@@ -3,6 +3,7 @@ package com.masai.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import com.masai.Model.User;
 import com.masai.Repository.RoleRepo;
 import com.masai.Service.UserService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 
@@ -22,7 +24,6 @@ import jakarta.validation.Valid;
 public class LoginController {
 	
 	@Autowired
-
 	UserService userSer;
 
 	@Autowired
@@ -45,6 +46,18 @@ public class LoginController {
 
 		user.setPassword(penc.encode(user.getPassword()));
 		user.setRole(roleRepo.findById(1).get());
+
+		return new ResponseEntity<>(userSer.regiserUser(user), HttpStatus.CREATED);
+
+	}
+	
+	@SecurityRequirement(name = "bearer-key")
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PostMapping("admin/signIn")
+	public ResponseEntity<User> registerAdmin(@Valid @RequestBody User user) throws UserException {
+
+		user.setPassword(penc.encode(user.getPassword()));
+		user.setRole(roleRepo.findById(2).get());
 
 		return new ResponseEntity<>(userSer.regiserUser(user), HttpStatus.CREATED);
 

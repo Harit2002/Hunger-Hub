@@ -1,6 +1,7 @@
 package com.masai.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.masai.Exception.AddressException;
 import com.masai.Exception.RestaurantException;
@@ -12,6 +13,7 @@ import com.masai.Repository.AddressRepo;
 import com.masai.Repository.RestaurantRepo;
 import com.masai.Repository.UserRepo;
 
+@Service
 public class AddressServiceImpl implements AddressService {
 
 	@Autowired
@@ -24,13 +26,17 @@ public class AddressServiceImpl implements AddressService {
 	private RestaurantRepo restRepo;
 
 	@Override
-	public Address addAddressToUser(Address address, Integer id) throws UserException {
+	public Address addAddressToUser(Address address, Integer id) throws UserException , AddressException{
 
 		User user = userRepo.findById(id).orElseThrow(() -> new UserException("User not found!!!"));
+		
+		if(user.getAddress() != null) throw new AddressException("Address already exist");
+
+		Address savedAddress = addressRepo.save(address);
 
 		user.setAddress(address);
 
-		Address savedAddress = addressRepo.save(address);
+		userRepo.save(user);
 
 		return savedAddress;
 	}
@@ -39,74 +45,60 @@ public class AddressServiceImpl implements AddressService {
 	public Address updateAddressToUser(Address address, Integer userId, Integer addressId)
 			throws AddressException, UserException {
 
-		User user = userRepo.findById(userId).orElseThrow(() -> new UserException("User Not Found!!!!"));
+		userRepo.findById(userId).orElseThrow(() -> new UserException("User Not Found!!!!"));
 
+		
+		
 		Address existingAddress = addressRepo.findById(addressId)
 				.orElseThrow(() -> new AddressException("No Address with this id"));
 
-		if (user.getAddress().getAddressId() == existingAddress.getAddressId()) {
-			existingAddress.setBuildingName(address.getBuildingName());
-			existingAddress.setArea(address.getArea());
-			existingAddress.setStreetNo(address.getStreetNo());
-			existingAddress.setPincode(address.getPincode());
-			existingAddress.setState(address.getState());
-			existingAddress.setCountry(address.getCountry());
-		} else {
-			throw new AddressException("User addressId and Existing address Id not matched Please try again!!");
-		}
+		address.setAddressId(existingAddress.getAddressId());
 
-		Address updateAddress = addressRepo.save(existingAddress);
-		return updateAddress;
+		return addressRepo.save(existingAddress);
 
 	}
 
 	@Override
 	public Address addAddressToRestaurant(Address address, Integer restId)
 			throws RestaurantException, AddressException {
+
 		Restaurant rest = restRepo.findById(restId)
 				.orElseThrow(() -> new RestaurantException("No restaurant with this ID..."));
-
+		
+		if(rest.getAddress() != null) throw new AddressException("Address already exist");
+		
+		Address add = addressRepo.save(address);
+		
 		rest.setAddress(address);
+		
+		restRepo.save(rest);
 
-		Address savedAddress = addressRepo.save(address);
-
-		return savedAddress;
+		return add;
 	}
 
 	@Override
 	public Address updateAddressToRestaurant(Address address, Integer restId, Integer addressID)
 			throws RestaurantException, AddressException {
+
 		Restaurant rest = restRepo.findById(restId)
 				.orElseThrow(() -> new RestaurantException("No restaurant with this ID..."));
-		Address existingAddress = addressRepo.findById(addressID)
-				.orElseThrow(() -> new AddressException("No Address with this id"));
 
-		if (rest.getAddress().getAddressId() == existingAddress.getAddressId()) {
-			existingAddress.setBuildingName(address.getBuildingName());
-			existingAddress.setArea(address.getArea());
-			existingAddress.setStreetNo(address.getStreetNo());
-			existingAddress.setPincode(address.getPincode());
-			existingAddress.setState(address.getState());
-			existingAddress.setCountry(address.getCountry());
-		}
+		Address add = rest.getAddress();
 
-		Address updateAddress = addressRepo.save(existingAddress);
-		return updateAddress;
+		address.setAddressId(add.getAddressId());
+
+		return addressRepo.save(address);
 	}
 
 	@Override
 	public Address deleteAddressOfUser(Integer userId, Integer addressId) throws UserException, AddressException {
 
-		User user = userRepo.findById(userId).orElseThrow(() -> new UserException("User Not found !!!!"));
+		userRepo.findById(userId).orElseThrow(() -> new UserException("User Not found !!!!"));
 
 		Address address = addressRepo.findById(addressId)
 				.orElseThrow(() -> new AddressException("No address with this id!!"));
 
-		if (user.getAddress().getAddressId() == address.getAddressId()) {
-			addressRepo.delete(address);
-		} else {
-			throw new AddressException("Address id not matched Please try again!!!!!");
-		}
+		addressRepo.delete(address);
 
 		return address;
 	}
@@ -115,18 +107,13 @@ public class AddressServiceImpl implements AddressService {
 	public Address deleteAddressOfRestaurant(Integer restId, Integer addressId)
 			throws RestaurantException, AddressException {
 
-		Restaurant rest = restRepo.findById(restId)
+		restRepo.findById(restId)
 				.orElseThrow(() -> new RestaurantException("No restaurant with this ID..."));
+
 		Address address = addressRepo.findById(addressId)
 				.orElseThrow(() -> new AddressException("No Address with this id"));
 
-		if (rest.getAddress().getAddressId() == address.getAddressId()) {
-
-			addressRepo.delete(address);
-
-		} else {
-			throw new AddressException("Address Id not matched Please try again !!!!!");
-		}
+		addressRepo.delete(address);
 
 		return address;
 	}

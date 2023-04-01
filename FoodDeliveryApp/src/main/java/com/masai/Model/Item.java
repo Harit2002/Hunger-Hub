@@ -1,17 +1,13 @@
 package com.masai.Model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -43,14 +39,11 @@ public class Item {
 	private double cost;
 
 	@JsonIgnore
-	@ManyToMany
-	@JoinTable(name = "Item_restaurant", 
-	joinColumns = { @JoinColumn(name = "itemID") },
-	inverseJoinColumns = { @JoinColumn(name = "restaurantId") 
-	})
-	private List<Restaurant> resList = new ArrayList<>();
-
 	@ManyToOne
+	@JoinColumn(name = "resId")
+	private Restaurant restaurant;
+
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "catid")
 	private Category category;
 }

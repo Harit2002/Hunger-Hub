@@ -1,5 +1,6 @@
 package com.masai.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.masai.Model.OrderDetails;
 import com.masai.Model.User;
 import com.masai.Repository.FoodCartRepo;
 import com.masai.Repository.OrderDetailRepo;
+import com.masai.Repository.RestaurantRepo;
 import com.masai.Repository.UserRepo;
 
 @Service
@@ -26,6 +28,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	
 	@Autowired
 	FoodCartRepo cartRepo;
+	
+	@Autowired
+	RestaurantRepo restaurantRepo;
 
 	@Override
 	public OrderDetails addOrder(OrderDetails orderDetails) throws OrderDetailsException {
@@ -66,14 +71,22 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
 	@Override
 	public List<OrderDetails> viewAllOrders(Integer resId) throws RestaurantException, OrderDetailsException {
-
+		
 		List<OrderDetails> list = orderRepo.findAll();
 		
-		if (list.isEmpty()) {
-			
+		restaurantRepo.findById(resId).orElseThrow(() -> new RestaurantException("No restaurant exist with id "+ resId ));
+		
+		List<OrderDetails> ans = new ArrayList<>();
+		
+		for(OrderDetails order : list) {
+			order.getFoodCart().getItemList().forEach(el -> {
+				if(el.getItem().getRestaurant().getResId() == resId) list.add(order);
+			});
 		}
 		
-		return null;
+		if(ans.isEmpty()) throw new OrderDetailsException("No order placed from this restaurant.");
+		
+		return ans;
 	}
 
 	@Override

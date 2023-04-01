@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.masai.Exception.ItemException;
 import com.masai.Exception.OrderDetailsException;
+import com.masai.Exception.RestaurantException;
 import com.masai.Exception.UserException;
 import com.masai.Model.OrderDetails;
 import com.masai.Service.OrderDetailService;
@@ -58,6 +59,12 @@ public class OrderDetailController {
 	public ResponseEntity<List<OrderDetails>> getItemByCustomer(@PathVariable Integer id) throws OrderDetailsException, UserException {
 
 		return new ResponseEntity<>(orderService.viewAllOrdersByCustomer(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("restaurant/{id}")
+	public ResponseEntity<List<OrderDetails>> getByRestaurant(@PathVariable Integer id) throws OrderDetailsException, RestaurantException {
+
+		return new ResponseEntity<>(orderService.viewAllOrders(id), HttpStatus.OK);
 	}
 
 }

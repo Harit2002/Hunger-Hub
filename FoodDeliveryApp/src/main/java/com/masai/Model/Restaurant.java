@@ -2,15 +2,13 @@ package com.masai.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -27,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer restaurantId;
+    private Integer resId;
     
     @NotNull(message = "Name of restaurent should not be null.")
     @NotEmpty(message = "Name of restaurent should not be empty.")
@@ -38,7 +36,7 @@ public class Restaurant {
     private Address address;
     
     @JsonIgnore
-    @ManyToMany(mappedBy = "resList")
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Item> itemList = new ArrayList<>();
     
     private String managerName;
