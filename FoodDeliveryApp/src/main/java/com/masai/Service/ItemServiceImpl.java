@@ -69,7 +69,7 @@ public class ItemServiceImpl implements ItemService {
 		Restaurant restaurant = restaurantRepo.findById(resId)
 				.orElseThrow(() -> new RestaurantException("Please enter a valid restaurant id."));
 		
-		List<Item> list = itemRepo.findByResList(restaurant);
+		List<Item> list = itemRepo.findByRestaurant(restaurant);
 		
 		if (list.isEmpty())
 			throw new ItemException("No item exist with restaurant name " + restaurant.getRestaurantName());

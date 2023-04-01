@@ -17,24 +17,41 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/cart")
-
+@SecurityRequirement(name = "bearer-key")
 public class FoodCartController {
 	
 	@Autowired
 	FoodCartService cartService;
-	
-	@SecurityRequirement(name = "bearer-key")
+
 	@PutMapping("/{cartId}")
 	public ResponseEntity<FoodCart> addItem(@PathVariable Integer cartId, @RequestParam Integer itemId ) throws ItemException, FoodCartException {
 
 		return new ResponseEntity<>(cartService.addItemToCart(cartId, itemId), HttpStatus.CREATED);
 	}
 	
+	@PutMapping("inc/{cartId}")
+	public ResponseEntity<FoodCart> updateItemQuantity(@PathVariable Integer cartId, @RequestParam Integer itemId, @RequestParam Integer quat ) throws ItemException, FoodCartException {
+
+		return new ResponseEntity<>(cartService.increaseQuantiity(cartId, itemId, quat), HttpStatus.CREATED);
+	}
+	
+	@PutMapping("dec/{cartId}")
+	public ResponseEntity<FoodCart> decreseItemQuantity(@PathVariable Integer cartId, @RequestParam Integer itemId, @RequestParam Integer quat ) throws ItemException, FoodCartException {
+
+		return new ResponseEntity<>(cartService.reduceQuantity(cartId, itemId, quat), HttpStatus.CREATED);
+	}
+	
 	@DeleteMapping("/{cartId}")
-	public ResponseEntity<FoodCart> addItem(@PathVariable Integer cartId) throws FoodCartException {
+	public ResponseEntity<FoodCart> celarItemList(@PathVariable Integer cartId) throws FoodCartException {
 
 		return new ResponseEntity<>(cartService.clearCart(cartId), HttpStatus.CREATED);
 		
+	}
+	
+	@DeleteMapping("delete/{cartId}")
+	public ResponseEntity<FoodCart> deleteItem(@PathVariable Integer cartId, @RequestParam Integer itemId ) throws ItemException, FoodCartException {
+
+		return new ResponseEntity<>(cartService.removeItem(cartId, itemId), HttpStatus.CREATED);
 	}
 
 }

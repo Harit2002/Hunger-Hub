@@ -1,6 +1,7 @@
 package com.masai.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class OrderDetails {
     private Integer orderId;
     private LocalDate date;
     
+    @NotNull(message = "Food cart is mendatory.")
     @OneToOne
     private FoodCart foodCart;
     private String orderStatus;

@@ -19,7 +19,7 @@ public class Address {
     private String buildingName;
     private String streetNo;
     private String area;
-    private String  state;
+    private String state;
     private String country;
     private String pincode;
 }

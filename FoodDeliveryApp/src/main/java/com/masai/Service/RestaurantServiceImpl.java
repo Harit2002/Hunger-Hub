@@ -35,7 +35,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 	@Override
 	public Restaurant updateRestaurant(Restaurant res) throws RestaurantException {
 		
-		respo.findById(res.getRestaurantId()).orElseThrow(()->  new RestaurantException("Restaurent is not registered"));
+		respo.findById(res.getResId()).orElseThrow(()->  new RestaurantException("Restaurent is not registered"));
 		
 		return respo.save(res);
 	}
@@ -60,7 +60,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 		
 		List<Restaurant> li = respo.findAll();
 		
-		List<Restaurant> list = li.stream().filter(el -> (el.getAddress().getArea().equalsIgnoreCase(location))).collect(Collectors.toList());		
+		List<Restaurant> list = li.stream().filter(el -> (el.getAddress() != null && el.getAddress().getArea().equalsIgnoreCase(location))).collect(Collectors.toList());		
 		
 		if(list.isEmpty()) throw new RestaurantException("No restaurant exist with this location.");
 		

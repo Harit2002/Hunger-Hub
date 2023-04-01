@@ -16,10 +16,12 @@ import com.masai.Model.Bill;
 import com.masai.Service.BillService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/bills")
+@SecurityRequirement(name = "bearer-key")
 public class BillController {
 
 	@Autowired
