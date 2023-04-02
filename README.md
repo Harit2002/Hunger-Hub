@@ -39,7 +39,7 @@ This project is about food delivery app backend using java and spring-framework.
 - Address Module
 
 ### Security Using JWT--
-![image](https://user-images.githubusercontent.com/112626182/229368292-004bc4b0-daca-4e0c-94ff-a82affad1ed1.png)
+![image](https://user-images.githubusercontent.com/112626182/229368653-4afe4f09-3e89-4c50-a89c-b03e04355d69.png)
 
 
 ## Entity Relationship diagram :---
