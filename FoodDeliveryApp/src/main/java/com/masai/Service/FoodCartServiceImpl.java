@@ -31,8 +31,7 @@ public class FoodCartServiceImpl implements FoodCartService{
 		
 		ItemQuantity item = new ItemQuantity();
 		item.setItem(item1);
-		
-		item.setCart(cart);
+		item.setQuantity(1);
 		
 		quantityRepository.save(item);
 		

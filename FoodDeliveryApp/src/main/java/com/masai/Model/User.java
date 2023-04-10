@@ -1,8 +1,6 @@
 package com.masai.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,7 +51,6 @@ public class User {
     private String password;
     
     @ManyToOne
-    @JsonIgnore
     private Role role;
     
 }

@@ -32,11 +32,11 @@ public class ItemController {
 	ItemService itemService;
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@PostMapping("")
+	@PostMapping("/{resID}")
 	@SecurityRequirement(name = "bearer-key")
-	public ResponseEntity<Item> addItem(@Valid @RequestBody Item item) throws ItemException {
+	public ResponseEntity<Item> addItem(@Valid @RequestBody Item item,@PathVariable Integer resID) throws ItemException, RestaurantException {
 
-		return new ResponseEntity<>(itemService.addItem(item), HttpStatus.CREATED);
+		return new ResponseEntity<>(itemService.addItem(item, resID), HttpStatus.CREATED);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -44,7 +44,8 @@ public class SecurityConfig {
 
 					}
 				}).and().authorizeHttpRequests().requestMatchers("/users/signIn").permitAll()
-				.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/webjars/**").permitAll()
+				.requestMatchers("/items/name/**", "/items/category**", "/items/restaurant/**","/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/webjars/**").permitAll()
+				.requestMatchers("/roles/**").hasRole("ROLE_ADMIN")
 				.anyRequest().authenticated().and()
 				.addFilterAfter(new JwtTokenGenratorFilter(), BasicAuthenticationFilter.class)
 				.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class).formLogin().and()
