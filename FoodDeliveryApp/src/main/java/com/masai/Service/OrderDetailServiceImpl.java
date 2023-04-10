@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.Exception.FoodCartException;
 import com.masai.Exception.OrderDetailsException;
 import com.masai.Exception.RestaurantException;
 import com.masai.Exception.UserException;
@@ -33,12 +34,25 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	RestaurantRepo restaurantRepo;
 
 	@Override
-	public OrderDetails addOrder(OrderDetails orderDetails) throws OrderDetailsException {
+	public OrderDetails addOrder(OrderDetails orderDetails, Integer cartId) throws OrderDetailsException, FoodCartException {
 
 		if (orderDetails == null)
 			throw new OrderDetailsException("Please enter valid order details.");
-
+		
+		FoodCart cart = cartRepo.findById(cartId).orElseThrow(() -> new FoodCartException("Please enter valid cart id."));
+		
+		orderDetails.setFoodCart(cart);
+		orderDetails.getItemList().addAll(cart.getItemList());
+		
+		cart.getItemList().clear();
+		
 		orderRepo.save(orderDetails);
+		
+		orderDetails.getItemList().forEach(el -> el.setOrder(orderDetails));
+		
+		orderRepo.save(orderDetails);
+		
+		cartRepo.save(cart);
 
 		return orderRepo.save(orderDetails);
 	}

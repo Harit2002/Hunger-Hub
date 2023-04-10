@@ -3,6 +3,7 @@ package com.masai.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,14 +39,14 @@ public class AddressController {
 		return new ResponseEntity<>(addressService.updateAddressToUser(address, userId, addressId), HttpStatus.ACCEPTED);
 
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/restaurants/{restaurantId}")
 	public ResponseEntity<Address> addAddressToRestaurant(@RequestBody Address address,
 			@PathVariable Integer restaurantId) throws RestaurantException, AddressException {
 
 		return new ResponseEntity<>(addressService.addAddressToRestaurant(address, restaurantId), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping("/restaurants/{restaurantId}/{addressId}")
 	public ResponseEntity<Address> updateAddressToRestaurant(@RequestBody Address address, @PathVariable Integer restaurantId,
 			@PathVariable Integer addressId) throws RestaurantException, AddressException {
@@ -60,7 +61,7 @@ public class AddressController {
 
 		return new ResponseEntity<>(addressService.deleteAddressOfUser(userId, addressId), HttpStatus.OK);
 	}
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@DeleteMapping("/restaurants/{restaurantId}/{addressId}")
 	public ResponseEntity<Address> deleteAddressFromRestaurant(@PathVariable Integer restaurantId,
 			@PathVariable Integer addressId) throws RestaurantException, AddressException {

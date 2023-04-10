@@ -26,11 +26,19 @@ public class ItemServiceImpl implements ItemService {
 	RestaurantRepo restaurantRepo;
 
 	@Override
-	public Item addItem(Item item) throws ItemException {
+	public Item addItem(Item item, Integer resId) throws ItemException,RestaurantException {
 		if (item == null)
 			throw new ItemException("Please enter valid item details");
 		
-		return itemRepo.save(item);
+		Restaurant restaurant = restaurantRepo.findById(resId).orElseThrow(() -> new RestaurantException("Please enter valid restaurant id."));
+		
+		item.setRestaurant(restaurant);
+		
+		Item item1 = itemRepo.save(item);
+		
+		restaurant.getItemList().add(item1);
+		
+		return item1;
 	}
 
 	@Override

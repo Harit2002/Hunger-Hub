@@ -68,13 +68,15 @@ public class RestaurantServiceImpl implements RestaurantService {
 	}
 
 	@Override
-	public List<Restaurant> viewRestaurantByItem(Integer id) throws ItemException {
+	public Restaurant viewRestaurantByItem(Integer id) throws ItemException {
 		
 		Item item = itemRepo.findById(id).orElseThrow(() -> new ItemException("Item with id " + id + " does not exist."));
 		
-		List<Restaurant> list = respo.findByItemList(item);
+		Restaurant res = item.getRestaurant();
 		
-		return list;
+		if(res == null) throw new ItemException("This item is not registered with any restaurant.");
+		
+		return res;
 	}
 
 }

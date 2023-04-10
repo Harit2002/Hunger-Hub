@@ -1,5 +1,7 @@
 package com.masai.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +28,8 @@ public class ItemQuantity {
 	private Integer quantity;
 	
 	@ManyToOne
-	@JoinColumn(name = "cartId")
-	private FoodCart cart;
+	@JoinColumn(name = "orderId")
+	@JsonIgnore
+	private OrderDetails order;
 	
 }

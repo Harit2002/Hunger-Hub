@@ -63,7 +63,7 @@ public class RestaurantController {
 	}
 	
 	@GetMapping("item/{id}")
-	public ResponseEntity<List<Restaurant>> viewRestaurantByItem(@PathVariable Integer id) throws RestaurantException, ItemException{
+	public ResponseEntity<Restaurant> viewRestaurantByItem(@PathVariable Integer id) throws RestaurantException, ItemException{
 		
 		return new ResponseEntity<>(repo.viewRestaurantByItem(id), HttpStatus.OK);
 

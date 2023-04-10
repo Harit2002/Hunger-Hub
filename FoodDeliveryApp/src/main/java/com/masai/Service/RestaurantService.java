@@ -14,6 +14,6 @@ public interface RestaurantService {
 	public Restaurant viewRestaurant(Integer id) throws RestaurantException;
 	public List<Restaurant> viewRestaurantByLocation(String location) throws RestaurantException;
 
-	public List<Restaurant> viewRestaurantByItem(Integer itemId) throws ItemException;
+	public Restaurant viewRestaurantByItem(Integer itemId) throws ItemException;
 
 }

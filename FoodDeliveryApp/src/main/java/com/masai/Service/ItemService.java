@@ -8,7 +8,7 @@ import com.masai.Exception.RestaurantException;
 import com.masai.Model.Item;
 
 public interface ItemService {
-	public Item addItem(Item item) throws ItemException;
+	public Item addItem(Item item, Integer resId) throws ItemException,RestaurantException;
 	public Item updateItem(Item item, Integer id) throws ItemException;
 	public Item removeItem(Integer id) throws ItemException;
 	public List<Item> viewItemByCategory(Integer id) throws ItemException, CategoryException;
